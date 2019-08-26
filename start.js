@@ -16,12 +16,19 @@ async function handleGEQuery(itemQuery) {
     return rl.question("SearchGE: ", handleGEQuery);
   }
 
-  process.stdout.write("\x1b[36mSearching....\x1b[0m ");
+  process.stdout.write("\x1b[2mSearching....\x1b[0m ");
 
   const possibleItems = api.searchLocalIdsFor(itemQuery);
 
   if (possibleItems.length === 0) {
     console.log("( \x1b[31mno results found\x1b[0m )");
+
+    const otherOptions = api.findNearestItems(itemQuery);
+    if(otherOptions.length > 0) {
+      console.log('Did you possibly mean?');
+      console.log(otherOptions.splice(0, 5).map(option => ` •    ${option.name}`).join('\n'))
+    }else
+      console.log('    - \x1b[31mno possible alternatives / invalid search\x1b[0m')
   } else {
     const itemData = await api.lookupItem(possibleItems[0].id);
     printResults(possibleItems, itemData);

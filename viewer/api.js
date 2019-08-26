@@ -7,12 +7,14 @@ const request = require('request-promise'),
 const itemIndex = require('../data/itemIndex.json'),
   { itemCatelog, names } = catelogApi.createItemCatelog(itemIndex);
 
-const searchLocalIdsFor = helper.wrapParams(require('./search').basicSearch, itemCatelog, names);
+const searchApi = require('./search');
+  searchLocalIdsFor = helper.wrapParams(searchApi.basicSearch, itemCatelog, names), 
+  findNearestItems = helper.wrapParams(searchApi.nearMatch, itemCatelog, names);
 
 const lookupItem = (itemId) => request({
   uri: apiUrl + itemId,
   json: true
   });
 
-module.exports = { lookupItem, searchLocalIdsFor }
+module.exports = { lookupItem, searchLocalIdsFor, findNearestItems}
 

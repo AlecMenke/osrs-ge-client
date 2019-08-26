@@ -45,5 +45,11 @@ module.exports = {
     }
 
     return nameList.filter(nameListEntry => query.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state && hasWord, true)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+  },
+  //basically just copied and pasted the above func. Will abstract later.
+  nearMatch(dictionary, nameList, query){
+
+    const scrubbedQuery = catelog.scrub(query);
+    return nameList.filter(nameListEntry => query.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state || hasWord, false)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   }
 }
