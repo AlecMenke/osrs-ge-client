@@ -3,18 +3,18 @@ const helper = require('./helper'),
 
 module.exports = {
   //too slow. not worth using
-  deepSearch(dictionary, nameList, query) {
+  deepSearch(dictionary, nameList, scrubbedQuery) {
 
-    query = query.toLowerCase();
-    console.log('query: ', query);
+    scrubbedQuery = scrubbedQuery.toLowerCase();
+    console.log('scrubbedQuery: ', scrubbedQuery);
 
-    if(dictionary[query] != null)
-      return [dictionary[query]];
+    if(dictionary[scrubbedQuery] != null)
+      return [dictionary[scrubbedQuery]];
 
     var closestMatch = {score: 999999, name: []};
     for(var i = 0; i < nameList.length; i++) {
       const nameListEntry = nameList[i];
-      const comparisonScore = helper.levenshteinDistance(query, nameListEntry);
+      const comparisonScore = helper.levenshteinDistance(scrubbedQuery, nameListEntry);
 
       if(closestMatch.score > comparisonScore){
         console.log('[√] added entry ' + nameListEntry + ' - ' + comparisonScore);
@@ -39,17 +39,17 @@ module.exports = {
 
     const scrubbedQuery = catelog.scrub(query);
 
-    if(dictionary[query] != null){
-      console.log('matched!', dictionary[query]);
-      return [{name: dictionary[query].original, id: dictionary[query].id}];
+    if(dictionary[scrubbedQuery] != null){
+      console.log('matched!', dictionary[scrubbedQuery]);
+      return [{name: dictionary[scrubbedQuery].original, id: dictionary[scrubbedQuery].id}];
     }
 
-    return nameList.filter(nameListEntry => query.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state && hasWord, true)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+    return nameList.filter(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state && hasWord, true)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   },
   //basically just copied and pasted the above func. Will abstract later.
   nearMatch(dictionary, nameList, query){
 
     const scrubbedQuery = catelog.scrub(query);
-    return nameList.filter(nameListEntry => query.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state || hasWord, false)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+    return nameList.filter(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state || hasWord, false)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   }
 }
