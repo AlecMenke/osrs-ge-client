@@ -1,6 +1,6 @@
 
 git-ge-ing
-![picture](git-ge-ing.png =300)
+![picture](git-ge-ing.png)
 ### Downloading
 
 cd to preferred download location
