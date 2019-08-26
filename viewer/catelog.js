@@ -3,7 +3,7 @@ const helper = require('./helper');
 module.exports = {
   scrub(textToScrub) {
 
-    return textToScrub.toLowerCase().replace(/[^\w\s!?]/g, '')
+    return textToScrub.toLowerCase().replace(/[^\w\s+\(\)!?]/g, '')
   },
   createItemCatelog(itemData){
     return itemData.reduce((update, {id, name}) => {

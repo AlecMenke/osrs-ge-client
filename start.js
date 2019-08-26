@@ -10,6 +10,8 @@ const rl = readline.createInterface({
 
 rl.question("Search GE: ", handleGEQuery);
 
+
+
 async function handleGEQuery(itemQuery) {
   //rerun if empty
   if (itemQuery.trim().length === 0) {
@@ -37,6 +39,8 @@ async function handleGEQuery(itemQuery) {
   //resets
   rl.question("SearchGE: ", handleGEQuery);
 }
+
+
 
 function printResults(searchResults, selectedItemData) {
   const { item } = selectedItemData;
