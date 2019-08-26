@@ -1,6 +1,7 @@
 const helper = require('./helper');
 
 module.exports = {
+  //too slow. not worth using
   deepSearch(dictionary, nameList, query) {
 
     query = query.toLowerCase();

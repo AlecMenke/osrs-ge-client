@@ -18,7 +18,7 @@ async function handleGEQuery(itemQuery) {
 
   process.stdout.write("\x1b[36mSearching....\x1b[0m ");
 
-  const possibleItems = api.search(itemQuery);
+  const possibleItems = api.searchLocalIdsFor(itemQuery);
 
   if (possibleItems.length === 0) {
     console.log("( \x1b[31mno results found\x1b[0m )");
@@ -57,7 +57,7 @@ ${searchResults
         ? `\n... ${searchResults.length - 7} more results\n`
         : ""
     }
-    
+
 >    \x1b[33m${item.current.price}gp\x1b[0m per ${item.name}
 >    ${item.day30.trend} trend of ${trendColor[item.day30.trend]}${item.day30.change}\x1b[0m over the last 30 days
 `;
