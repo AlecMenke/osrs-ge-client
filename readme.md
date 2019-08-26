@@ -1,4 +1,7 @@
-##Downloading
+
+git-ge-ing
+![picture](git-ge-ing.png)
+### Downloading
 
 cd to preferred download location
 ```sh
@@ -7,6 +10,6 @@ cd osrs-ge-client
 npm install
 ```
 
-##Usage
+### Usage
 *while in project directory*
-```npm run start```
+```npm run start``` to open the cli utility.
