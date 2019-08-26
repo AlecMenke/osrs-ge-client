@@ -12,7 +12,7 @@ const askForGESearch = () =>
   rl.question("Search GE: ", async itemQuery => {
     //rerun if empty
     if (itemQuery.trim().length === 0) return askForGESearch();
-    process.stdout.write("Searching.... ");
+    process.stdout.write("\x1b[36mSearching....\x1b[0m ");
     const possibleItems = api.search(itemQuery);
 
     if (possibleItems.length === 0) {
@@ -24,7 +24,6 @@ const askForGESearch = () =>
 
     askForGESearch();
   });
-console.log("\n".repeat(20));
 askForGESearch();
 
 function printResults(searchResults, selectedItemData) {
