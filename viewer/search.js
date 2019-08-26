@@ -1,4 +1,5 @@
-const helper = require('./helper');
+const helper = require('./helper'),
+  catelog = require('./catelog');
 
 module.exports = {
   //too slow. not worth using
@@ -33,17 +34,16 @@ module.exports = {
 
 
   },
-
+  //a little less basic now
   basicSearch(dictionary, nameList, query){
 
-    query = query.toLowerCase();
+    const scrubbedQuery = catelog.scrub(query);
 
     if(dictionary[query] != null){
       console.log('matched!', dictionary[query]);
       return [{name: dictionary[query].original, id: dictionary[query].id}];
     }
 
-    return nameList.filter(x => x.indexOf(query) !== -1).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+    return nameList.filter(nameListEntry => query.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state && hasWord, true)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   }
 }
-

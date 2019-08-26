@@ -1,12 +1,16 @@
 const helper = require('./helper');
 
 module.exports = {
+  scrub(textToScrub) {
+
+    return textToScrub.toLowerCase().replace(/[^\w\s!?]/g, '')
+  },
   createItemCatelog(itemData){
     return itemData.reduce((update, {id, name}) => {
-      const lowercaseName = name.toLowerCase();
+      const scrubbedName = this.scrub(name);
 
-      update['itemCatelog'][lowercaseName] = {id, original: name};
-      update['names'].push(lowercaseName);
+      update['itemCatelog'][scrubbedName] = {id, original: name};
+      update['names'].push(scrubbedName);
 
       helper.assert(update['abcCatelog'], name[0], Array).push(name);
         
