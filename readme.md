@@ -1,5 +1,7 @@
 
 ###### git-ge-ing
+ - [download](#downloading)
+ - [usage](#usage)
 ![picture](git-ge-ing.png)
 ### Downloading
 
