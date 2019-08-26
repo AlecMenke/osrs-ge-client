@@ -56,7 +56,7 @@ module.exports = {
 
     const scrubbedQuery = catelog.scrub(query);
     return nameList
-      .map(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce(([word, instance], hasWord) => [word, instance + (hasWord? 1 : 0)], [nameListEntry, 0]))
+      .map(nameListEntry => [nameListEntry, scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((instances, hasWord) => instances + (hasWord? 1 : 0), 0)])
       .filter(([word, wordInstances]) => wordInstances > 0)
       .sort((a, b) => b[1] - a[1])
       .map(([word]) => word)
