@@ -12,4 +12,4 @@ npm install
 
 ### Usage
 *while in project directory*
-```npm run start``` to open the cli utility.
+```node .``` or ```npm run start``` to open the cli utility.
