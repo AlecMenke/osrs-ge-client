@@ -6,7 +6,7 @@ module.exports = {
   deepSearch(dictionary, nameList, scrubbedQuery) {
 
     scrubbedQuery = scrubbedQuery.toLowerCase();
-    console.log('scrubbedQuery: ', scrubbedQuery);
+    console.log('query: ', query);
 
     if(dictionary[scrubbedQuery] != null)
       return [dictionary[scrubbedQuery]];
@@ -44,12 +44,22 @@ module.exports = {
       return [{name: dictionary[scrubbedQuery].original, id: dictionary[scrubbedQuery].id}];
     }
 
-    return nameList.filter(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state && hasWord, true)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+    return nameList
+      .filter(nameListEntry => 
+        scrubbedQuery.split(' ')
+          .map(word => nameListEntry.indexOf(word) !== -1)
+          .reduce((state, hasWord) => state && hasWord, true))
+      .map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   },
-  //basically just copied and pasted the above func. Will abstract later.
+
   nearMatch(dictionary, nameList, query){
 
     const scrubbedQuery = catelog.scrub(query);
-    return nameList.filter(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce((state, hasWord) => state || hasWord, false)).map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
+    return nameList
+      .map(nameListEntry => scrubbedQuery.split(' ').map(word => nameListEntry.indexOf(word) !== -1).reduce(([word, instance], hasWord) => [word, instance + (hasWord? 1 : 0)], [nameListEntry, 0]))
+      .filter(([word, wordInstances]) => wordInstances > 0)
+      .sort((a, b) => b[1] - a[1])
+      .map(([word]) => word)
+      .map(x => ({name: dictionary[x].original, id: dictionary[x].id}));
   }
 }
