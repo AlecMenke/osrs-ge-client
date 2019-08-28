@@ -15,7 +15,7 @@ rl.question("Search GE: ", handleGEQuery);
 async function handleGEQuery(itemQuery) {
   //rerun if empty
   if (itemQuery.trim().length === 0) {
-    return rl.question("SearchGE: ", handleGEQuery);
+    return rl.question("Search GE: ", handleGEQuery);
   }
 
   process.stdout.write("\x1b[2mSearching....\x1b[0m ");
@@ -25,10 +25,10 @@ async function handleGEQuery(itemQuery) {
   if (possibleItems.length === 0) {
     console.log("( \x1b[31mno results found\x1b[0m )");
 
-    const otherOptions = api.findNearestItems(itemQuery);
-    if(otherOptions.length > 0) {
-      console.log('Did you possibly mean?');
-      console.log(otherOptions.splice(0, 5).map(option => ` •    ${option.name}`).join('\n'))
+    const alternatives = api.findNearestItems(itemQuery);
+    if(alternatives.length > 0) {
+      console.log('\nDid you possibly mean?');
+      console.log(alternatives.splice(0, 5).map(option => ` •    ${option.name}`).join('\n'))
     }else
       console.log('    - \x1b[31mno possible alternatives / invalid search\x1b[0m')
   } else {
@@ -37,7 +37,7 @@ async function handleGEQuery(itemQuery) {
   }
 
   //resets
-  rl.question("SearchGE: ", handleGEQuery);
+  rl.question("Search GE: ", handleGEQuery);
 }
 
 
